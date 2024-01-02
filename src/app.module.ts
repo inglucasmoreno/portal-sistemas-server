@@ -10,6 +10,7 @@ import { jwtConstants } from './modules/auth/constants';
 import { UsuariosModule } from './modules/usuarios/usuarios.module';
 import { InicializacionModule } from './modules/inicializacion/inicializacion.module';
 import { DependenciasModule } from './modules/dependencias/dependencias.module';
+import { TiposOrdenServicioModule } from './modules/tipos_orden_servicio/tipos_orden_servicio.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { DependenciasModule } from './modules/dependencias/dependencias.module';
     UsuariosModule,
     InicializacionModule,
     DependenciasModule,
+    TiposOrdenServicioModule,
 
   ],
   controllers: [AppController],

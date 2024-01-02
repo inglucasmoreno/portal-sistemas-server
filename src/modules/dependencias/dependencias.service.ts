@@ -24,7 +24,7 @@ export class DependenciasService {
 
   // Listar dependencias
   async getAll({
-    columna = 'descripcion',
+    columna = 'nombre',
     direccion = 'desc',
     activo = '',
     parametro = '',
