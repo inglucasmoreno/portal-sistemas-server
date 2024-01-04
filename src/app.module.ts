@@ -11,6 +11,7 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module';
 import { InicializacionModule } from './modules/inicializacion/inicializacion.module';
 import { DependenciasModule } from './modules/dependencias/dependencias.module';
 import { TiposOrdenServicioModule } from './modules/tipos_orden_servicio/tipos_orden_servicio.module';
+import { OrdenesServicioModule } from './modules/ordenes_servicio/ordenes_servicio.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { TiposOrdenServicioModule } from './modules/tipos_orden_servicio/tipos_o
     InicializacionModule,
     DependenciasModule,
     TiposOrdenServicioModule,
+    OrdenesServicioModule,
 
   ],
   controllers: [AppController],
