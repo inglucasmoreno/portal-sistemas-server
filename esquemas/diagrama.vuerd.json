@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -273.200000000001,
-    "scrollLeft": -70.3999999999999,
-    "zoomLevel": 0.9,
+    "scrollTop": -402.8000000000007,
+    "scrollLeft": -51.19999999999999,
+    "zoomLevel": 1,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -353,7 +353,7 @@
           "active": false,
           "left": 10.7132,
           "top": 92.9231,
-          "zIndex": 32,
+          "zIndex": 4,
           "widthName": 60,
           "widthComment": 60,
           "color": "#00F1EA"
@@ -508,7 +508,7 @@
           "active": false,
           "left": 452.7837,
           "top": 117.2667,
-          "zIndex": 4,
+          "zIndex": 2,
           "widthName": 85.1162109375,
           "widthComment": 60,
           "color": "#E1FF00"
@@ -663,7 +663,7 @@
           "active": false,
           "left": 938.5603,
           "top": 106.0446,
-          "zIndex": 3,
+          "zIndex": 1,
           "widthName": 115.673828125,
           "widthComment": 60,
           "color": "#00FF15"
@@ -739,6 +739,29 @@
               "fk": true,
               "pfk": false,
               "widthName": 116.1689453125,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "7ecd3d41-2971-4543-9617-565dfe3edcb8",
+            "name": "usuarioId",
+            "comment": "",
+            "dataType": "int",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -1022,10 +1045,10 @@
           }
         ],
         "ui": {
-          "active": false,
-          "left": 558.71,
-          "top": 462.15,
-          "zIndex": 1,
+          "active": true,
+          "left": 524.0429,
+          "top": 435.4836,
+          "zIndex": 9,
           "widthName": 98.09716796875,
           "widthComment": 60,
           "color": "#FF00FD"
@@ -1203,7 +1226,7 @@
           "active": false,
           "left": 91.6663,
           "top": 505.5776,
-          "zIndex": 5,
+          "zIndex": 3,
           "widthName": 136.41162109375,
           "widthComment": 60,
           "color": "#00ECFF"
@@ -1237,8 +1260,8 @@
           "columnIds": [
             "a5a028f8-f792-4728-b5fc-4442edd2087d"
           ],
-          "x": 891.263955078125,
-          "y": 462.15,
+          "x": 856.596855078125,
+          "y": 435.4836,
           "direction": "top"
         },
         "constraintName": "fk_tiposordenservicio_to_ordenesservicio",
@@ -1263,8 +1286,8 @@
           "columnIds": [
             "d2cc707b-a2da-4941-9cce-f5b6998e7922"
           ],
-          "x": 669.561318359375,
-          "y": 462.15,
+          "x": 634.894218359375,
+          "y": 435.4836,
           "direction": "top"
         },
         "constraintName": "fk_dependencias_to_ordenesservicio",
@@ -1280,7 +1303,7 @@
           "columnIds": [
             "cc8b6821-d939-4a60-a1fb-96d88807eb0c"
           ],
-          "x": 184.85040703125,
+          "x": 97.781803515625,
           "y": 428.4231,
           "direction": "bottom"
         },
@@ -1320,6 +1343,32 @@
           "direction": "top"
         },
         "constraintName": "fk_dependencias_to_usuariosdependencias",
+        "visible": true
+      },
+      {
+        "id": "df97affa-a66f-42c5-8890-24aa7e924c22",
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "0f9539bf-7331-4fb0-b7ae-4e0bf5be4df5",
+          "columnIds": [
+            "cc8b6821-d939-4a60-a1fb-96d88807eb0c"
+          ],
+          "x": 271.91901054687503,
+          "y": 428.4231,
+          "direction": "bottom"
+        },
+        "end": {
+          "tableId": "2a6dd436-97a3-4b47-85a4-c432b47c4fc2",
+          "columnIds": [
+            "7ecd3d41-2971-4543-9617-565dfe3edcb8"
+          ],
+          "x": 524.0429,
+          "y": 633.9836,
+          "direction": "left"
+        },
+        "constraintName": "fk_usuarios_to_ordenesservicio",
         "visible": true
       }
     ]

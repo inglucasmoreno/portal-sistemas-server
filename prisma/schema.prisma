@@ -24,12 +24,13 @@ model Usuarios {
   activo                        Boolean?                 @default(true)
   createdAt                     DateTime                 @default(now())
   updatedAt                     DateTime                 @updatedAt
+  UsuariosDependencias          UsuariosDependencias[]   @relation("UsuariosToDependencias")
+  OrdenesServicio               OrdenesServicio[]        @relation("UsuarioToOrdenesServicio")
   CreatorDependencia            Dependencias[]
   CreatorTiposOrdenServicio     TiposOrdenServicio[]
-  CreatorOrdenesServicio        OrdenesServicio[]
+  CreatorOrdenesServicio        OrdenesServicio[]        @relation("CreatorOrdenServicio")
   CreatorOrdenesServicioTecnico OrdenesServicioTecnico[]
   CreatorUsuariosDependencias   UsuariosDependencias[]   @relation("CreatorUsuarioDependencia")
-  UsuariosDependencias          UsuariosDependencias[]   @relation("UsuariosToDependencias")
 }
 
 // Dependencias
@@ -42,6 +43,7 @@ model Dependencias {
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @updatedAt
   UsuariosDependencias UsuariosDependencias[]
+  OrdenesServicio      OrdenesServicio[]
 }
 
 // Usuarios - Dependencias
@@ -76,15 +78,19 @@ model OrdenesServicio {
   fechaEnProceso         DateTime                 @default(now())
   fechaSolucionado       DateTime                 @default(now())
   tipoOrdenServicioId    Int?
+  dependenciaId          Int?
+  usuarioId              Int?
   observacionSolicitud   String?                  @db.VarChar(500)
   estadoOrden            String?                  @default("PENDIENTE")
   estadoEquipo           String?                  @default("FUNCIONANDO")
   activo                 Boolean?                 @default(true)
-  creatorUserId          Int?
-  creatorUser            Usuarios?                @relation(fields: [creatorUserId], references: [id])
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
-  OrdenesServicioTecnico OrdenesServicioTecnico[]
+  creatorUserId          Int?
+  usuario                Usuarios?                @relation("UsuarioToOrdenesServicio", fields: [usuarioId], references: [id])
+  creatorUser            Usuarios?                @relation("CreatorOrdenServicio",fields: [creatorUserId], references: [id])
+  dependencia            Dependencias?            @relation(fields: [dependenciaId], references: [id])
+  ordenesServicioTecnico OrdenesServicioTecnico[]
 }
 
 // Ordenes de servicio - Tecnico

@@ -27,7 +27,7 @@ export class OrdenesServicioController {
   async getAll(@Res() res, @Query() query): Promise<any> {
     
     const {ordenes, totalItems} = await this.ordenesServicioService.getAll(query);
-
+  
     return res.status(HttpStatus.OK).json({
       success: true,
       message: 'Ordenes obtenidas correctamente',
@@ -40,6 +40,8 @@ export class OrdenesServicioController {
   @UseGuards(JwtAuthGuard)
   @Post()
   async insert(@Res() res, @Body() createData: Prisma.OrdenesServicioCreateInput): Promise<any> {
+
+    console.log(createData);
 
     const orden = await this.ordenesServicioService.insert(createData);
 
