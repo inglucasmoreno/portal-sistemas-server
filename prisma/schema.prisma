@@ -12,32 +12,50 @@ datasource db {
 
 // Models list
 model Usuarios {
-  id                     Int                      @id @default(autoincrement())
-  usuario                String                   @unique @db.VarChar(30)
-  apellido               String                   @db.VarChar(50)
-  nombre                 String                   @db.VarChar(50)
-  dni                    String                   @db.VarChar(30)
-  password               String
-  email                  String                   @db.VarChar(50)
-  role                   String?                  @default("ADMIN_ROLE")
-  activo                 Boolean?                 @default(true)
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
-  Dependencias           Dependencias[]
-  TiposOrdenServicio     TiposOrdenServicio[]
-  OrdenesServicio        OrdenesServicio[]
-  OrdenesServicioTecnico OrdenesServicioTecnico[]
+  id                            Int                      @id @default(autoincrement())
+  usuario                       String                   @unique @db.VarChar(30)
+  apellido                      String                   @db.VarChar(50)
+  nombre                        String                   @db.VarChar(50)
+  dni                           String                   @db.VarChar(30)
+  password                      String
+  email                         String                   @db.VarChar(50)
+  telefono                      String                   @db.VarChar(50)
+  role                          String?                  @default("ADMIN_ROLE")
+  activo                        Boolean?                 @default(true)
+  createdAt                     DateTime                 @default(now())
+  updatedAt                     DateTime                 @updatedAt
+  CreatorDependencia            Dependencias[]
+  CreatorTiposOrdenServicio     TiposOrdenServicio[]
+  CreatorOrdenesServicio        OrdenesServicio[]
+  CreatorOrdenesServicioTecnico OrdenesServicioTecnico[]
+  CreatorUsuariosDependencias   UsuariosDependencias[]   @relation("CreatorUsuarioDependencia")
+  UsuariosDependencias          UsuariosDependencias[]   @relation("UsuariosToDependencias")
 }
 
 // Dependencias
 model Dependencias {
-  id            Int       @id @default(autoincrement())
-  nombre        String    @unique @db.VarChar(150)
-  activo        Boolean?  @default(true)
+  id                   Int                    @id @default(autoincrement())
+  nombre               String                 @unique @db.VarChar(150)
+  activo               Boolean?               @default(true)
+  creatorUserId        Int?
+  creatorUser          Usuarios?              @relation(fields: [creatorUserId], references: [id])
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  UsuariosDependencias UsuariosDependencias[]
+}
+
+// Usuarios - Dependencias
+model UsuariosDependencias {
+  id            Int           @id @default(autoincrement())
+  dependenciaId Int?
+  dependencia   Dependencias? @relation(fields: [dependenciaId], references: [id])
+  usuarioId     Int?
+  usuario       Usuarios?     @relation("UsuariosToDependencias", fields: [usuarioId], references: [id])
+  activo        Boolean?      @default(true)
   creatorUserId Int?
-  creatorUser   Usuarios? @relation(fields: [creatorUserId], references: [id])
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  creatorUser   Usuarios?     @relation("CreatorUsuarioDependencia", fields: [creatorUserId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 // Tipos orden servicio
@@ -54,8 +72,9 @@ model TiposOrdenServicio {
 // Ordenes de servicio
 model OrdenesServicio {
   id                     Int                      @id @default(autoincrement())
-  fechaOrden             DateTime                 @default(now())
-  fechaEntrega           DateTime                 @default(now())
+  fechaPendiente         DateTime                 @default(now())
+  fechaEnProceso         DateTime                 @default(now())
+  fechaSolucionado       DateTime                 @default(now())
   tipoOrdenServicioId    Int?
   observacionEntrega     String?                  @db.VarChar(500)
   estadoOrden            String?                  @default("PENDIENTE")

@@ -21,6 +21,7 @@ export class InicializacionService {
       dni: '34060390',
       email: 'admin@gmail.com',
       role: 'ADMIN_ROLE',
+      telefono: '2664869642',
       activo: true
     }
 
