@@ -3,8 +3,8 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -154.80000000000018,
-    "scrollLeft": -23,
+    "scrollTop": -273.200000000001,
+    "scrollLeft": -70.3999999999999,
     "zoomLevel": 0.9,
     "show": {
       "tableComment": true,
@@ -234,6 +234,29 @@
             }
           },
           {
+            "id": "da245db3-057d-4883-a85a-297d49aff9fc",
+            "name": "telefono",
+            "comment": "",
+            "dataType": "string",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
             "id": "88645fd1-c757-474e-8450-1897f945293d",
             "name": "role",
             "comment": "",
@@ -330,7 +353,7 @@
           "active": false,
           "left": 10.7132,
           "top": 92.9231,
-          "zIndex": 110,
+          "zIndex": 32,
           "widthName": 60,
           "widthComment": 60,
           "color": "#00F1EA"
@@ -485,7 +508,7 @@
           "active": false,
           "left": 452.7837,
           "top": 117.2667,
-          "zIndex": 113,
+          "zIndex": 4,
           "widthName": 85.1162109375,
           "widthComment": 60,
           "color": "#E1FF00"
@@ -640,7 +663,7 @@
           "active": false,
           "left": 938.5603,
           "top": 106.0446,
-          "zIndex": 112,
+          "zIndex": 3,
           "widthName": 115.673828125,
           "widthComment": 60,
           "color": "#00FF15"
@@ -1002,7 +1025,7 @@
           "active": false,
           "left": 558.71,
           "top": 462.15,
-          "zIndex": 95,
+          "zIndex": 1,
           "widthName": 98.09716796875,
           "widthComment": 60,
           "color": "#FF00FD"
@@ -1177,10 +1200,10 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 91.6663,
           "top": 505.5776,
-          "zIndex": 121,
+          "zIndex": 5,
           "widthName": 136.41162109375,
           "widthComment": 60,
           "color": "#00ECFF"
@@ -1258,7 +1281,7 @@
             "cc8b6821-d939-4a60-a1fb-96d88807eb0c"
           ],
           "x": 184.85040703125,
-          "y": 407.9231,
+          "y": 428.4231,
           "direction": "bottom"
         },
         "end": {

@@ -76,7 +76,7 @@ model OrdenesServicio {
   fechaEnProceso         DateTime                 @default(now())
   fechaSolucionado       DateTime                 @default(now())
   tipoOrdenServicioId    Int?
-  observacionEntrega     String?                  @db.VarChar(500)
+  observacionSolicitud   String?                  @db.VarChar(500)
   estadoOrden            String?                  @default("PENDIENTE")
   estadoEquipo           String?                  @default("FUNCIONANDO")
   activo                 Boolean?                 @default(true)
