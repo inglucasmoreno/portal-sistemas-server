@@ -62,13 +62,14 @@ model UsuariosDependencias {
 
 // Tipos orden servicio
 model TiposOrdenServicio {
-  id            Int       @id @default(autoincrement())
-  descripcion   String    @unique @db.VarChar(150)
-  activo        Boolean?  @default(true)
-  creatorUserId Int?
-  creatorUser   Usuarios? @relation(fields: [creatorUserId], references: [id])
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id              Int               @id @default(autoincrement())
+  descripcion     String            @unique @db.VarChar(150)
+  activo          Boolean?          @default(true)
+  creatorUserId   Int?
+  creatorUser     Usuarios?         @relation(fields: [creatorUserId], references: [id])
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  OrdenesServicio OrdenesServicio[]
 }
 
 // Ordenes de servicio
@@ -87,8 +88,9 @@ model OrdenesServicio {
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
   creatorUserId          Int?
+  tipoOrdenServicio      TiposOrdenServicio?      @relation(fields: [tipoOrdenServicioId], references: [id])
   usuario                Usuarios?                @relation("UsuarioToOrdenesServicio", fields: [usuarioId], references: [id])
-  creatorUser            Usuarios?                @relation("CreatorOrdenServicio",fields: [creatorUserId], references: [id])
+  creatorUser            Usuarios?                @relation("CreatorOrdenServicio", fields: [creatorUserId], references: [id])
   dependencia            Dependencias?            @relation(fields: [dependenciaId], references: [id])
   ordenesServicioTecnico OrdenesServicioTecnico[]
 }

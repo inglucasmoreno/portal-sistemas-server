@@ -38,7 +38,8 @@ export class AuthService {
       apellido: user.apellido,
       nombre: user.nombre,
       // permisos: permisos,
-      role: user.role
+      role: user.role,
+      dependencias: user.UsuariosDependencias
     };
 
     return {

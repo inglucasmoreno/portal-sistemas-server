@@ -11,7 +11,16 @@ export class UsuariosService {
 
   // Usuario por ID
   async getUsuario(id: number): Promise<Usuarios> {
-    const usuarioDB = await this.prisma.usuarios.findFirst({ where: { id } });
+    const usuarioDB = await this.prisma.usuarios.findFirst({
+      where: { id },
+      include: {
+        UsuariosDependencias: {
+          include: {
+            dependencia: true
+          }
+        }
+      },
+    });
     if (!usuarioDB) throw new NotFoundException('El usuario no existe');
     return usuarioDB;
   }
@@ -20,6 +29,13 @@ export class UsuariosService {
   async getUsuarioPorNombre(nombreUsuario: string): Promise<Usuarios | null> {
     return await this.prisma.usuarios.findFirst({
       where: { usuario: nombreUsuario, activo: true },
+      include: {
+        UsuariosDependencias: {
+          include: {
+            dependencia: true
+          }
+        }
+      },
     });
   }
 
@@ -27,6 +43,13 @@ export class UsuariosService {
   async getUsuarioPorDNI(dni: string): Promise<Usuarios | null> {
     return await this.prisma.usuarios.findFirst({
       where: { dni, activo: true },
+      include: {
+        UsuariosDependencias: {
+          include: {
+            dependencia: true
+          }
+        }
+      },
     });
   }
 
@@ -35,19 +58,37 @@ export class UsuariosService {
     email = email.toLocaleLowerCase();
     return await this.prisma.usuarios.findFirst({
       where: { email, activo: true },
+      include: {
+        UsuariosDependencias: {
+          include: {
+            dependencia: true
+          }
+        }
+      },
     });
   }
 
   // Listar usuario
-  async listarUsuarios({ columna, direccion }: any): Promise<Usuarios[]> {
+  async listarUsuarios({ columna = 'apellido', direccion = 1, activo = '' }: any): Promise<Usuarios[]> {
 
+    let where = {};
     let orderBy = {};
+
     orderBy[columna] = direccion == 1 ? 'asc' : 'desc';
 
-    console.log(orderBy);
+    // Filtro por activo
+    if (activo !== '') where = { ...where, activo: activo === 'true' ? true : false };
 
     return await this.prisma.usuarios.findMany({
-      orderBy
+      include: {
+        UsuariosDependencias: {
+          include: {
+            dependencia: true
+          }
+        }
+      },
+      orderBy,
+      where
     });
 
   }
@@ -89,7 +130,14 @@ export class UsuariosService {
     // );
 
     return await this.prisma.usuarios.create({
-      data: usuariosDTO
+      data: usuariosDTO,
+      include: {
+        UsuariosDependencias: {
+          include: {
+            dependencia: true
+          }
+        }
+      },
     });
 
   }
@@ -126,11 +174,18 @@ export class UsuariosService {
 
     // Actualizacion de datos de usuario
 
-    return await this.prisma.usuarios.update({ 
-      where: { id }, 
+    return await this.prisma.usuarios.update({
+      where: { id },
       data,
+      include: {
+        UsuariosDependencias: {
+          include: {
+            dependencia: true
+          }
+        }
+      },
     });
-    
+
 
     // Actualizacion de permisos
     // await Promise.all(
@@ -188,7 +243,17 @@ export class UsuariosService {
     const salt = bcryptjs.genSaltSync();
     const password = bcryptjs.hashSync(password_nuevo, salt);
 
-    await this.prisma.usuarios.update({ where: { id }, data: { password } });
+    await this.prisma.usuarios.update({
+      where: { id },
+      data: { password },
+      include: {
+        UsuariosDependencias: {
+          include: {
+            dependencia: true
+          }
+        }
+      },
+    });
     return 'Actualizacion correcta';
 
   }

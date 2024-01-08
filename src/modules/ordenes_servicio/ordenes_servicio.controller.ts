@@ -6,18 +6,18 @@ import { Prisma } from '@prisma/client';
 @Controller('ordenes-servicio')
 export class OrdenesServicioController {
 
-    constructor(private readonly ordenesServicioService: OrdenesServicioService){}
+  constructor(private readonly ordenesServicioService: OrdenesServicioService) { }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   async getId(@Res() res, @Param('id') id: number): Promise<any> {
 
     const orden = await this.ordenesServicioService.getId(id);
-    
+
     return res.status(HttpStatus.OK).json({
       success: true,
       message: 'Orden obtenida correctamente',
-      orden     
+      orden
     })
 
   }
@@ -25,14 +25,14 @@ export class OrdenesServicioController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async getAll(@Res() res, @Query() query): Promise<any> {
-    
-    const {ordenes, totalItems} = await this.ordenesServicioService.getAll(query);
-  
+
+    const { ordenes, totalItems } = await this.ordenesServicioService.getAll(query);
+
     return res.status(HttpStatus.OK).json({
       success: true,
       message: 'Ordenes obtenidas correctamente',
       ordenes,
-      totalItems   
+      totalItems
     })
 
   }
@@ -50,12 +50,12 @@ export class OrdenesServicioController {
       message: 'orden creada correctamente',
       orden
     })
-  
+
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async update(@Res() res, @Param('id') id: number, @Body() dataUpdate: Prisma.OrdenesServicioUpdateInput){
+  async update(@Res() res, @Param('id') id: number, @Body() dataUpdate: Prisma.OrdenesServicioUpdateInput) {
 
     const orden = await this.ordenesServicioService.update(id, dataUpdate);
 

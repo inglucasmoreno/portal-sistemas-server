@@ -33,12 +33,12 @@ export class TiposOrdenServicioService {
     }: any): Promise<any> {
   
       // Ordenando datos
+      let where = {};
       let orderBy = {};
       orderBy[columna] = direccion;
-  
-      let where: any = {
-        activo: activo === 'true' ? true : false
-      };
+    
+      // Filtro por activo
+      if (activo !== '') where = { ...where, activo: activo === 'true' ? true : false };
   
       // where.OR.push({
       //   descripcion: {
@@ -57,9 +57,7 @@ export class TiposOrdenServicioService {
         },
         // skip: (pagina - 1) * itemsPorPagina,
         orderBy,
-        // where: {
-        //   activo: false
-        // }
+        where
       })
   
       return {

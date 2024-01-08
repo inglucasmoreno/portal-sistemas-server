@@ -12,6 +12,7 @@ import { InicializacionModule } from './modules/inicializacion/inicializacion.mo
 import { DependenciasModule } from './modules/dependencias/dependencias.module';
 import { TiposOrdenServicioModule } from './modules/tipos_orden_servicio/tipos_orden_servicio.module';
 import { OrdenesServicioModule } from './modules/ordenes_servicio/ordenes_servicio.module';
+import { UsuariosDependenciasModule } from './modules/usuarios_dependencias/usuarios_dependencias.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { OrdenesServicioModule } from './modules/ordenes_servicio/ordenes_servic
     DependenciasModule,
     TiposOrdenServicioModule,
     OrdenesServicioModule,
+    UsuariosDependenciasModule,
 
   ],
   controllers: [AppController],
