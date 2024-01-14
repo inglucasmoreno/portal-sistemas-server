@@ -1,11 +1,12 @@
 ## Informacion inicial
 - `Node v20.0.9`
 - `NPM v9.5.1`
+- `PNPM v8.14.1`
 
 ## Comenzando
 ```bash
 # Instalacion de librerias
-$ yarn install
+$ pnpm install
 ```
 
 ## Variables de entorno
@@ -20,19 +21,19 @@ $ docker compose up -d
 ## Prisma ORM
 - Migracion de inicializacion
 ```bash
-$ yarn prisma migrate:init
+$ pnpm prisma migrate:init
 ```
 
 ## Ejecucion de proyecto
 ```bash
 # Desarrollo
-$ yarn start
+$ pnpm start
 
 # Modo seguimiento
-$ yarn start:dev
+$ pnpm start:dev
 
 # Modo produccion
-$ yarn start:prod
+$ pnpm start:prod
 ```
 
 ## Desarrollado por
