@@ -175,6 +175,7 @@ export class UsuariosService {
       dni,
       email,
       telefono,
+      dependencia,
       role,
       password,
       activo,
@@ -187,12 +188,32 @@ export class UsuariosService {
       dni,
       email,
       telefono,
+      dependencia,
       role,
       password,
       activo: activo === 'true' ? true : false,
     }
 
     // Actualizacion de datos de usuario
+
+    // Se agrega la relacion usuarioDependencia
+    if (dependencia) {
+      
+      const dataUsuarioDependencia = {
+        usuarioId: id,
+        dependenciaId: Number(dependencia),
+      }
+
+      // Actualizar - Update la relacion usuarioDependencia donde usuarioId = id
+      const usuarioDependenciaDB = await this.prisma.usuariosDependencias.findFirst({ where: { usuarioId: id } });
+      if (usuarioDependenciaDB) {
+        await this.prisma.usuariosDependencias.update({ where: { id: usuarioDependenciaDB.id }, data: dataUsuarioDependencia });
+      }
+
+    }
+
+    // Eliminar la dependencia
+    delete data.dependencia;
 
     return await this.prisma.usuarios.update({
       where: { id },
@@ -205,7 +226,6 @@ export class UsuariosService {
         }
       },
     });
-
 
     // Actualizacion de permisos
     // await Promise.all(

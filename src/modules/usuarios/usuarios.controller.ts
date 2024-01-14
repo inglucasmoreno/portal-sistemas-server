@@ -59,7 +59,7 @@ export class UsuariosController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async actualizarUsuario(@Res() res, @Param('id') id: number, @Body() dataUpdate: Prisma.UsuariosUpdateInput){
+  async actualizarUsuario(@Res() res, @Param('id') id: number, @Body() dataUpdate: any){
 
     const { password } = dataUpdate;
 
