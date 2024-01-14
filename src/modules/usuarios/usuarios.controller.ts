@@ -39,7 +39,7 @@ export class UsuariosController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async createUsuario(@Res() res, @Body() createData: Prisma.UsuariosCreateInput): Promise<any> {
+  async createUsuario(@Res() res, @Body() createData: any): Promise<any> {
 
     const { password } = createData;
 

@@ -94,7 +94,9 @@ export class UsuariosService {
   }
 
   // Crear usuario
-  async crearUsuario(usuariosDTO: Prisma.UsuariosCreateInput): Promise<Usuarios> {
+  async crearUsuario(usuariosDTO: any): Promise<Usuarios> {
+
+    const { dependencia, creatorUserId } = usuariosDTO;
 
     // Uppercase y Lowercase
     usuariosDTO.apellido = usuariosDTO.apellido.toLocaleUpperCase();
@@ -129,7 +131,11 @@ export class UsuariosService {
     //   })
     // );
 
-    return await this.prisma.usuarios.create({
+    // Eliminar dependencia y creatorUserId
+    delete usuariosDTO.dependencia;
+    delete usuariosDTO.creatorUserId;
+
+    const usuarioCreado = await this.prisma.usuarios.create({
       data: usuariosDTO,
       include: {
         UsuariosDependencias: {
@@ -139,6 +145,18 @@ export class UsuariosService {
         }
       },
     });
+
+    // Se agrega la relacion usuarioDependencia
+    if (dependencia) {
+      const dataUsuarioDependencia = {
+        usuarioId: usuarioCreado.id,
+        dependenciaId: Number(dependencia),
+        creatorUserId
+      }
+      await this.prisma.usuariosDependencias.create({ data: dataUsuarioDependencia });
+    }
+
+    return usuarioCreado;
 
   }
 
@@ -156,6 +174,7 @@ export class UsuariosService {
       nombre,
       dni,
       email,
+      telefono,
       role,
       password,
       activo,
@@ -167,6 +186,7 @@ export class UsuariosService {
       nombre,
       dni,
       email,
+      telefono,
       role,
       password,
       activo: activo === 'true' ? true : false,
