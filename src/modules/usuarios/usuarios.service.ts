@@ -202,12 +202,16 @@ export class UsuariosService {
       const dataUsuarioDependencia = {
         usuarioId: id,
         dependenciaId: Number(dependencia),
+        creatorUserId: usuariosUpdateDTO.creatorUserId
       }
 
       // Actualizar - Update la relacion usuarioDependencia donde usuarioId = id
       const usuarioDependenciaDB = await this.prisma.usuariosDependencias.findFirst({ where: { usuarioId: id } });
+      
       if (usuarioDependenciaDB) {
         await this.prisma.usuariosDependencias.update({ where: { id: usuarioDependenciaDB.id }, data: dataUsuarioDependencia });
+      }else{
+        await this.prisma.usuariosDependencias.create({ data: dataUsuarioDependencia });
       }
 
     }
