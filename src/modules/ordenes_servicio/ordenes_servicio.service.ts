@@ -77,7 +77,8 @@ export class OrdenesServicioService {
 
   // Crear orden
   async insert(createData: Prisma.OrdenesServicioCreateInput): Promise<OrdenesServicio> {
-    createData.observacionSolicitud = createData.observacionSolicitud.toString().toUpperCase();
+    createData.observacionSolicitud = createData.observacionSolicitud?.toString().toUpperCase();
+    createData.motivoRechazo = createData?.motivoRechazo?.toString().toUpperCase();
     return await this.prisma.ordenesServicio.create({ data: createData, include: { creatorUser: true } });
   }
 
@@ -85,6 +86,7 @@ export class OrdenesServicioService {
   async update(id: number, updateData: Prisma.OrdenesServicioUpdateInput): Promise<OrdenesServicio> {
 
     updateData.observacionSolicitud = updateData?.observacionSolicitud?.toString().toUpperCase();
+    updateData.motivoRechazo = updateData?.motivoRechazo?.toString().toUpperCase();
 
     const ordenDB = await this.prisma.ordenesServicio.findFirst({ where: { id } });
 

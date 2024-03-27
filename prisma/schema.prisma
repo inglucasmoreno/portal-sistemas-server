@@ -12,25 +12,28 @@ datasource db {
 
 // Models list
 model Usuarios {
-  id                            Int                      @id @default(autoincrement())
-  usuario                       String                   @unique @db.VarChar(30)
-  apellido                      String                   @db.VarChar(50)
-  nombre                        String                   @db.VarChar(50)
-  dni                           String                   @db.VarChar(30)
-  password                      String
-  email                         String                   @db.VarChar(50)
-  telefono                      String                   @db.VarChar(50)
-  role                          String?                  @default("ADMIN_ROLE")
-  activo                        Boolean?                 @default(true)
-  createdAt                     DateTime                 @default(now())
-  updatedAt                     DateTime                 @updatedAt
-  UsuariosDependencias          UsuariosDependencias[]   @relation("UsuariosToDependencias")
-  OrdenesServicio               OrdenesServicio[]        @relation("UsuarioToOrdenesServicio")
-  CreatorDependencia            Dependencias[]
-  CreatorTiposOrdenServicio     TiposOrdenServicio[]
-  CreatorOrdenesServicio        OrdenesServicio[]        @relation("CreatorOrdenServicio")
-  CreatorOrdenesServicioTecnico OrdenesServicioTecnico[]
-  CreatorUsuariosDependencias   UsuariosDependencias[]   @relation("CreatorUsuarioDependencia")
+  id                             Int                          @id @default(autoincrement())
+  usuario                        String                       @unique @db.VarChar(30)
+  apellido                       String                       @db.VarChar(50)
+  nombre                         String                       @db.VarChar(50)
+  dni                            String                       @db.VarChar(30)
+  password                       String
+  email                          String                       @db.VarChar(50)
+  telefono                       String                       @db.VarChar(50)
+  role                           String?                      @default("ADMIN_ROLE")
+  activo                         Boolean?                     @default(true)
+  createdAt                      DateTime                     @default(now())
+  updatedAt                      DateTime                     @updatedAt
+  UsuariosDependencias           UsuariosDependencias[]       @relation("UsuariosToDependencias")
+  OrdenesServicio                OrdenesServicio[]            @relation("UsuarioToOrdenesServicio")
+  CreatorOrdenesServicio         OrdenesServicio[]            @relation("CreatorOrdenServicio")
+  CreatorUsuariosDependencias    UsuariosDependencias[]       @relation("CreatorUsuarioDependencia")
+  CreatorOrdenesServicioTecnicos OrdenesServicioToTecnicos[]  @relation("CreatorOrdenesServicioTecnicos")
+  CreatorTiposOrdenServicio      TiposOrdenServicio[]
+  CreatorDependencia             Dependencias[]
+  OrdenesServicioCompletadas     OrdenesServicioCompletadas[]
+  OrdenesServicioRechazadas      OrdenesServicioRechazadas[]
+  OrdenesServicioTecnicos        OrdenesServicioToTecnicos[]  @relation("TecnicoOrdenesServicioTecnicos")
 }
 
 // Dependencias
@@ -74,37 +77,67 @@ model TiposOrdenServicio {
 
 // Ordenes de servicio
 model OrdenesServicio {
-  id                     Int                      @id @default(autoincrement())
-  fechaPendiente         DateTime                 @default(now())
-  fechaEnProceso         DateTime                 @default(now())
-  fechaSolucionado       DateTime                 @default(now())
-  tipoOrdenServicioId    Int?
-  dependenciaId          Int?
-  usuarioId              Int?
-  observacionSolicitud   String?                  @db.VarChar(500)
-  estadoOrden            String?                  @default("PENDIENTE")
-  estadoEquipo           String?                  @default("FUNCIONANDO")
-  activo                 Boolean?                 @default(true)
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
-  creatorUserId          Int?
-  tipoOrdenServicio      TiposOrdenServicio?      @relation(fields: [tipoOrdenServicioId], references: [id])
-  usuario                Usuarios?                @relation("UsuarioToOrdenesServicio", fields: [usuarioId], references: [id])
-  creatorUser            Usuarios?                @relation("CreatorOrdenServicio", fields: [creatorUserId], references: [id])
-  dependencia            Dependencias?            @relation(fields: [dependenciaId], references: [id])
-  ordenesServicioTecnico OrdenesServicioTecnico[]
+  id                         Int                          @id @default(autoincrement())
+  fechaPendiente             DateTime                     @default(now())
+  fechaEnProceso             DateTime                     @default(now())
+  fechaCierre                DateTime                     @default(now())
+  tipoOrdenServicioId        Int?
+  dependenciaId              Int?
+  usuarioId                  Int?
+  observacionSolicitud       String?                      @db.VarChar(500)
+  motivoRechazo              String?                      @default("") @db.VarChar(500)
+  estadoOrden                String?                      @default("Pendiente")
+  estadoEquipo               String?                      @default("Funcionando")
+  activo                     Boolean?                     @default(true)
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  creatorUserId              Int?
+  tipoOrdenServicio          TiposOrdenServicio?          @relation(fields: [tipoOrdenServicioId], references: [id])
+  usuario                    Usuarios?                    @relation("UsuarioToOrdenesServicio", fields: [usuarioId], references: [id])
+  creatorUser                Usuarios?                    @relation("CreatorOrdenServicio", fields: [creatorUserId], references: [id])
+  dependencia                Dependencias?                @relation(fields: [dependenciaId], references: [id])
+  ordenesServicioTecnico     OrdenesServicioToTecnicos[]
+  OrdenesServicioCompletadas OrdenesServicioCompletadas[]
+  OrdenesServicioRechazadas  OrdenesServicioRechazadas[]
 }
 
-// Ordenes de servicio - Tecnico
-model OrdenesServicioTecnico {
-  id                 Int              @id @default(autoincrement())
-  ordenServicioId    Int?
-  tecnicoId          Int?
-  observacionTecnico String?          @db.VarChar(500)
-  activo             Boolean?         @default(true)
-  creatorUserId      Int?
-  createdAt          DateTime         @default(now())
-  updatedAt          DateTime         @updatedAt
-  tecnico            Usuarios?        @relation(fields: [tecnicoId], references: [id])
-  ordenServicio      OrdenesServicio? @relation(fields: [ordenServicioId], references: [id])
+// OrdenesServicioCompletadas
+model OrdenesServicioCompletadas {
+  id              Int              @id @default(autoincrement())
+  ordenServicioId Int?
+  observaciones   String?          @default("") @db.VarChar(500)
+  activo          Boolean?         @default(true)
+  creatorUserId   Int?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  creatorUser     Usuarios?        @relation(fields: [creatorUserId], references: [id])
+  ordenServicio   OrdenesServicio? @relation(fields: [ordenServicioId], references: [id])
+}
+
+// OrdenesServicioRechazadas
+model OrdenesServicioRechazadas {
+  id              Int              @id @default(autoincrement())
+  ordenServicioId Int?
+  motivo          String           @db.VarChar(500)
+  activo          Boolean?         @default(true)
+  creatorUserId   Int?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  ordenServicio   OrdenesServicio? @relation(fields: [ordenServicioId], references: [id])
+  creatorUser     Usuarios?        @relation(fields: [creatorUserId], references: [id])
+}
+
+// OrdenesServicioTecnicos
+model OrdenesServicioToTecnicos {
+  id              Int              @id @default(autoincrement())
+  ordenServicioId Int?
+  tecnicoId       Int?
+  observaciones   String?          @db.VarChar(500)
+  activo          Boolean?         @default(true)
+  creatorUserId   Int?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  creatorUser     Usuarios?        @relation("CreatorOrdenesServicioTecnicos", fields: [creatorUserId], references: [id])
+  tecnico         Usuarios?        @relation("TecnicoOrdenesServicioTecnicos", fields: [tecnicoId], references: [id])
+  ordenServicio   OrdenesServicio? @relation(fields: [ordenServicioId], references: [id])
 }
