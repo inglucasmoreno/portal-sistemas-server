@@ -96,7 +96,9 @@ export class UsuariosService {
   // Crear usuario
   async crearUsuario(usuariosDTO: any): Promise<Usuarios> {
 
-    const { dependencia, creatorUserId } = usuariosDTO;
+    const { dependencias, creatorUserId } = usuariosDTO;
+
+    console.log(dependencias);
 
     // Uppercase y Lowercase
     usuariosDTO.apellido = usuariosDTO.apellido.toLocaleUpperCase();
@@ -131,8 +133,8 @@ export class UsuariosService {
     //   })
     // );
 
-    // Eliminar dependencia y creatorUserId
-    delete usuariosDTO.dependencia;
+    // Eliminar dependencias y creatorUserId
+    delete usuariosDTO.dependencias;
     delete usuariosDTO.creatorUserId;
 
     const usuarioCreado = await this.prisma.usuarios.create({
@@ -145,12 +147,12 @@ export class UsuariosService {
         }
       },
     });
-
-    // Se agrega la relacion usuarioDependencia
-    if (dependencia) {
+    
+    // Agregar cada relacion mediante un for
+    for (const dependencia of dependencias) {
       const dataUsuarioDependencia = {
         usuarioId: usuarioCreado.id,
-        dependenciaId: Number(dependencia),
+        dependenciaId: dependencia,
         creatorUserId
       }
       await this.prisma.usuariosDependencias.create({ data: dataUsuarioDependencia });
@@ -175,7 +177,7 @@ export class UsuariosService {
       dni,
       email,
       telefono,
-      dependencia,
+      dependencias,
       role,
       password,
       activo,
@@ -188,36 +190,30 @@ export class UsuariosService {
       dni,
       email,
       telefono,
-      dependencia,
       role,
       password,
       activo: activo === 'true' ? true : false,
     }
 
-    // Actualizacion de datos de usuario
-
     // Se agrega la relacion usuarioDependencia
-    if (dependencia) {
-      
+    if (dependencias.length > 0) {
+
       const dataUsuarioDependencia = {
         usuarioId: id,
-        dependenciaId: Number(dependencia),
+        dependenciaId: Number(dependencias[0]),
         creatorUserId: usuariosUpdateDTO.creatorUserId
       }
 
       // Actualizar - Update la relacion usuarioDependencia donde usuarioId = id
       const usuarioDependenciaDB = await this.prisma.usuariosDependencias.findFirst({ where: { usuarioId: id } });
-      
+
       if (usuarioDependenciaDB) {
         await this.prisma.usuariosDependencias.update({ where: { id: usuarioDependenciaDB.id }, data: dataUsuarioDependencia });
-      }else{
+      } else {
         await this.prisma.usuariosDependencias.create({ data: dataUsuarioDependencia });
       }
 
     }
-
-    // Eliminar la dependencia
-    delete data.dependencia;
 
     return await this.prisma.usuarios.update({
       where: { id },
