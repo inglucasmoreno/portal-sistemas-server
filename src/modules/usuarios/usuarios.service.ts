@@ -69,7 +69,7 @@ export class UsuariosService {
   }
 
   // Listar usuario
-  async listarUsuarios({ columna = 'apellido', direccion = 1, activo = '' }: any): Promise<Usuarios[]> {
+  async listarUsuarios({ columna = 'apellido', direccion = 1, activo = '', parametro = '' }): Promise<Usuarios[]> {
 
     let where = {};
     let orderBy = {};
@@ -78,6 +78,18 @@ export class UsuariosService {
 
     // Filtro por activo
     if (activo !== '') where = { ...where, activo: activo === 'true' ? true : false };
+
+    // Filtro por DNI, apellido y nombre
+    if (parametro !== '') {
+      where = {
+        ...where,
+        OR: [
+          { dni: { contains: parametro } },
+          { apellido: { contains: parametro } },
+          { nombre: { contains: parametro } }
+        ]
+      }
+    }
 
     return await this.prisma.usuarios.findMany({
       include: {

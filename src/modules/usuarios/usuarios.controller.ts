@@ -27,6 +27,7 @@ export class UsuariosController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async listarUsuarios(@Res() res, @Query() query): Promise<any> {
+
     const usuarios = await this.usuariosService.listarUsuarios(query);
 
     return res.status(HttpStatus.OK).json({
