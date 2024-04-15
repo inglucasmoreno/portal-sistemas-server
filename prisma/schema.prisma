@@ -84,6 +84,7 @@ model OrdenesServicio {
   tipoOrdenServicioId        Int?
   dependenciaId              Int?
   usuarioId                  Int?
+  telefonoContacto           String                       @db.VarChar(50)                      
   observacionSolicitud       String?                      @db.VarChar(500)
   motivoRechazo              String?                      @default("") @db.VarChar(500)
   estadoOrden                String?                      @default("Pendiente")

@@ -36,11 +36,14 @@ export class AuthService {
       dni: user.dni,
       email: user.email,
       apellido: user.apellido,
-      nombre: user.nombre,
+      nombre: user.nombre, 
+      telefono: user.telefono,
       // permisos: permisos,
       role: user.role,
       dependencias: user.UsuariosDependencias
     };
+
+    console.log(payload);
 
     return {
       token: this.jwtService.sign(payload),

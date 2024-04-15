@@ -3,8 +3,8 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -277.2933333333331,
-    "scrollLeft": -185.05064243641243,
+    "scrollTop": -293,
+    "scrollLeft": -25,
     "zoomLevel": 1,
     "show": {
       "tableComment": true,
@@ -837,6 +837,29 @@
             }
           },
           {
+            "id": "d453bec3-bdac-4aed-9bf8-bd88753690a5",
+            "name": "telefonoContacto",
+            "comment": "",
+            "dataType": "string",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 100.29345703125,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
             "id": "7107bdd1-f0c7-40f0-9251-6563086c565b",
             "name": "observacionSolicitud",
             "comment": "",
@@ -1048,7 +1071,7 @@
           "active": false,
           "left": 522.7929,
           "top": 416.7336,
-          "zIndex": 5,
+          "zIndex": 24,
           "widthName": 98.09716796875,
           "widthComment": 60,
           "color": "#FF00FD"
@@ -1876,7 +1899,7 @@
             "7ecd3d41-2971-4543-9617-565dfe3edcb8"
           ],
           "x": 522.7929,
-          "y": 515.9836,
+          "y": 521.1086,
           "direction": "left"
         },
         "constraintName": "fk_usuarios_to_ordenesservicio",
@@ -1893,7 +1916,7 @@
             "74c5a907-1883-4228-a557-e4cd882585bf"
           ],
           "x": 522.7929,
-          "y": 714.4836,
+          "y": 729.8586,
           "direction": "left"
         },
         "end": {
@@ -1919,7 +1942,7 @@
             "74c5a907-1883-4228-a557-e4cd882585bf"
           ],
           "x": 841.845390234375,
-          "y": 813.7336,
+          "y": 834.2336,
           "direction": "bottom"
         },
         "end": {
@@ -1945,7 +1968,7 @@
             "74c5a907-1883-4228-a557-e4cd882585bf"
           ],
           "x": 629.143730078125,
-          "y": 813.7336,
+          "y": 834.2336,
           "direction": "bottom"
         },
         "end": {
