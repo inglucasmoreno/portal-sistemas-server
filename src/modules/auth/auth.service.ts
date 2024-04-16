@@ -43,8 +43,6 @@ export class AuthService {
       dependencias: user.UsuariosDependencias
     };
 
-    console.log(payload);
-
     return {
       token: this.jwtService.sign(payload),
       usuario: payload

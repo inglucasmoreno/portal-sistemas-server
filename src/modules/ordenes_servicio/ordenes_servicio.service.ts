@@ -31,23 +31,33 @@ export class OrdenesServicioService {
     direccion = 'desc',
     activo = '',
     parametro = '',
+    dependencia = '',
+    estado = '',
     pagina = 1,
     itemsPorPagina = 10000
   }: any): Promise<any> {
 
-    // Ordenando datos
-    let orderBy = {};
-    orderBy[columna] = direccion;
+    let where: any = {};
 
-    let where: any = {
-      activo: activo === 'true' ? true : false
-    };
+    // Filtro por dependencia
+    if (dependencia !== '') {
+      where = {...where, dependenciaId: Number(dependencia)}
+    }
+
+    // Filtro por estado
+    if (estado !== '') {
+      where = {...where, estadoOrden: estado}
+    }
 
     // where.OR.push({
     //   descripcion: {
     //     contains: parametro.toUpperCase()
     //   }
     // })
+
+    // Ordenando datos
+    let orderBy = {};
+    orderBy[columna] = direccion;
 
     // Total de ordenes
     const totalItems = await this.prisma.ordenesServicio.count({ where });
@@ -61,11 +71,9 @@ export class OrdenesServicioService {
         tipoOrdenServicio: true,
         creatorUser: true,
       },
-      // skip: (pagina - 1) * itemsPorPagina,
+      skip: (pagina - 1) * itemsPorPagina,
       orderBy,
-      // where: {
-      //   activo: false
-      // }
+      where
     })
 
     return {
