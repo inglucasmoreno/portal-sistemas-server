@@ -66,13 +66,31 @@ export class OrdenesServicioToTecnicosService {
     }
 
     // Crear orden to tecnico
-    async insert(createData: Prisma.OrdenesServicioToTecnicosCreateInput): Promise<OrdenesServicioToTecnicos> {
-        createData.observaciones = createData.observaciones?.toLocaleUpperCase().trim();
-        return await this.prisma.ordenesServicioToTecnicos.create({ data: createData, include: { 
-            tecnico: true,
-            ordenServicio: true,
-            creatorUser: true,
-        } });
+    async insert(createData: any): Promise<any> {
+        
+        const { ordenServicioId, tecnicos, creatorUserId } = createData;
+
+        // Se agregan tecnicos a la orden
+        tecnicos.forEach(async (tecnico: any) => {
+            await this.prisma.ordenesServicioToTecnicos.create({ 
+                data: { 
+                    ordenServicioId: Number(ordenServicioId), 
+                    tecnicoId: tecnico.id,
+                    creatorUserId
+                } });
+        });
+
+        // Se coloca la orden de servicio en estado "En proceso"
+        await this.prisma.ordenesServicio.update({ 
+            where: { id: Number(ordenServicioId) }, 
+            data: { 
+                estadoOrden: 'En proceso',
+                fechaEnProceso: new Date()
+            } 
+        });
+
+        return '';
+
     }
 
     // Actualizar orden to tecnico

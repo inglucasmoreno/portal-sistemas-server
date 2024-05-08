@@ -29,8 +29,25 @@ export class InicializacionService {
     const salt = bcryptjs.genSaltSync();
     data.password = bcryptjs.hashSync('admin', salt);
 
-    // Se crea y se almacena en la base de datos al usuario administrador    
-    return await this.prisma.usuarios.create({ data })
+    // Se crea el usuario ADMIN en base
+    const usuarioDB = await this.prisma.usuarios.create({ data });
+
+    // Se crea la dependencia SISTEMAS en base
+    const dependenciaDB = await this.prisma.dependencias.create({ 
+      data: { 
+        nombre: 'SISTEMAS', 
+        creatorUserId: usuarioDB.id  
+      } });
+
+    // Se crea la relacion entre el usuario y la dependencia
+    await this.prisma.usuariosDependencias.create({ 
+      data: { 
+        usuarioId: usuarioDB.id, 
+        dependenciaId: dependenciaDB.id,
+        creatorUserId: usuarioDB.id
+      } });
+
+    return usuarioDB;
 
   }
 

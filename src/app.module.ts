@@ -13,9 +13,8 @@ import { DependenciasModule } from './modules/dependencias/dependencias.module';
 import { TiposOrdenServicioModule } from './modules/tipos_orden_servicio/tipos_orden_servicio.module';
 import { OrdenesServicioModule } from './modules/ordenes_servicio/ordenes_servicio.module';
 import { UsuariosDependenciasModule } from './modules/usuarios_dependencias/usuarios_dependencias.module';
-import { OrdenesServicioRechazadasModule } from './modules/ordenes_servicio_rechazadas/ordenes_servicio_rechazadas.module';
-import { OrdenesServicioCompletadasModule } from './modules/ordenes_servicio_completadas/ordenes_servicio_completadas.module';
 import { OrdenesServicioToTecnicosModule } from './modules/ordenes_servicio_to_tecnicos/ordenes_servicio_to_tecnicos.module';
+import { OrdenesServicioHistorialModule } from './modules/ordenes_servicio_historial/ordenes_servicio_historial.module';
 
 
 @Module({
@@ -48,9 +47,8 @@ import { OrdenesServicioToTecnicosModule } from './modules/ordenes_servicio_to_t
     TiposOrdenServicioModule,
     OrdenesServicioModule,
     UsuariosDependenciasModule,
-    OrdenesServicioRechazadasModule,
-    OrdenesServicioCompletadasModule,
     OrdenesServicioToTecnicosModule,
+    OrdenesServicioHistorialModule,
   ],
   controllers: [AppController],
   providers: [AppService ],

@@ -39,16 +39,12 @@ export class OrdenesServicioToTecnicosController {
 
     @UseGuards(JwtAuthGuard)
     @Post()
-    async insert(@Res() res, @Body() createData: Prisma.OrdenesServicioToTecnicosCreateInput): Promise<any> {
-
-        const ordenToTecnico = await this.ordenesServicioToTecnicosService.insert(createData);
-
+    async insert(@Res() res, @Body() createData: any): Promise<any> {
+        await this.ordenesServicioToTecnicosService.insert(createData);
         return res.status(HttpStatus.CREATED).json({
             success: true,
-            message: 'Orden to tecnico creada correctamente',
-            ordenToTecnico
+            message: 'Asignaciones completadas correctamente',
         })
-
     }
 
     @UseGuards(JwtAuthGuard)

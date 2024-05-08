@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { OrdenesServicio, Prisma, TiposOrdenServicio } from '@prisma/client';
+import { OrdenesServicio, Prisma, TiposOrdenServicio, OrdenesServicioToTecnicos } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -16,6 +16,17 @@ export class OrdenesServicioService {
         usuario: true,
         dependencia: true,
         tipoOrdenServicio: true,
+        ordenesServicioTecnico: {
+          include: {
+            tecnico: true
+          }
+        },
+        ordenesServicioHistorial: {
+          orderBy: { createdAt: 'desc' },
+          include: {
+            creatorUser: true
+          }
+        },
         creatorUser: true,
       }
     })
@@ -69,6 +80,17 @@ export class OrdenesServicioService {
         usuario: true,
         dependencia: true,
         tipoOrdenServicio: true,
+        ordenesServicioTecnico: {
+          include: {
+            tecnico: true
+          }
+        },
+        ordenesServicioHistorial: {
+          orderBy: { createdAt: 'desc' },
+          include: {
+            creatorUser: true
+          }
+        },
         creatorUser: true,
       },
       skip: (pagina - 1) * itemsPorPagina,
@@ -91,11 +113,13 @@ export class OrdenesServicioService {
   }
 
   // Actualizar orden
-  async update(id: number, updateData: Prisma.OrdenesServicioUpdateInput): Promise<OrdenesServicio> {
+  async update(id: number, updateData: any): Promise<OrdenesServicio> {
 
+    // Adaptando valores
     updateData.observacionSolicitud = updateData?.observacionSolicitud?.toString().toUpperCase();
     updateData.motivoRechazo = updateData?.motivoRechazo?.toString().toUpperCase();
-
+    if(updateData.fechaCierre) updateData.fechaCierre = new Date(updateData.fechaCierre);
+    
     const ordenDB = await this.prisma.ordenesServicio.findFirst({ where: { id } });
 
     // Verificacion: La orden no existe
@@ -108,8 +132,14 @@ export class OrdenesServicioService {
         usuario: true,
         dependencia: true,
         tipoOrdenServicio: true,
+        ordenesServicioHistorial: {
+          orderBy: { createdAt: 'desc' },
+          include: {
+            creatorUser: true
+          }
+        },
         creatorUser: true,
-      }
+      },
     })
 
   }
