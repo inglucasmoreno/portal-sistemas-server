@@ -15,6 +15,7 @@ import { OrdenesServicioModule } from './modules/ordenes_servicio/ordenes_servic
 import { UsuariosDependenciasModule } from './modules/usuarios_dependencias/usuarios_dependencias.module';
 import { OrdenesServicioToTecnicosModule } from './modules/ordenes_servicio_to_tecnicos/ordenes_servicio_to_tecnicos.module';
 import { OrdenesServicioHistorialModule } from './modules/ordenes_servicio_historial/ordenes_servicio_historial.module';
+import { OrdenesServicioHistorialToTecnicosModule } from './modules/ordenes_servicio_historial_to_tecnicos/ordenes_servicio_historial_to_tecnicos.module';
 
 
 @Module({
@@ -49,6 +50,7 @@ import { OrdenesServicioHistorialModule } from './modules/ordenes_servicio_histo
     UsuariosDependenciasModule,
     OrdenesServicioToTecnicosModule,
     OrdenesServicioHistorialModule,
+    OrdenesServicioHistorialToTecnicosModule,
   ],
   controllers: [AppController],
   providers: [AppService ],

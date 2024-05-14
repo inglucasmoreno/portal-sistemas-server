@@ -1,16 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { OrdenesServicioHistorial, Prisma } from '@prisma/client';
+import { OrdenesServicioHistorialToTecnicos, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
-export class OrdenesServicioHistorialService {
+export class OrdenesServicioHistorialToTecnicosService {
 
     constructor(private prisma: PrismaService) { }
 
     // Relacion por ID
-    async getId(id: number): Promise<OrdenesServicioHistorial> {
+    async getId(id: number): Promise<OrdenesServicioHistorialToTecnicos> {
 
-        const relacion = await this.prisma.ordenesServicioHistorial.findFirst({
+        const relacion = await this.prisma.ordenesServicioHistorialToTecnicos.findFirst({
             where: { id },
             include: {
                 creatorUser: true,
@@ -24,7 +24,7 @@ export class OrdenesServicioHistorialService {
 
     // Listar relaciones
     async getAll({
-        columna = 'nombre',
+        columna = 'createdAt',
         direccion = 'desc',
         activo = '',
         parametro = '',
@@ -47,10 +47,10 @@ export class OrdenesServicioHistorialService {
         // })
 
         // Total de relaciones
-        const totalItems = await this.prisma.ordenesServicioHistorial.count({ where });
+        const totalItems = await this.prisma.ordenesServicioHistorialToTecnicos.count({ where });
 
         // Listado de relaciones
-        const relaciones = await this.prisma.ordenesServicioHistorial.findMany({
+        const relaciones = await this.prisma.ordenesServicioHistorialToTecnicos.findMany({
             take: Number(itemsPorPagina),
             include: {
                 creatorUser: true,
@@ -67,44 +67,34 @@ export class OrdenesServicioHistorialService {
 
     }
 
-    // Crear relacion
+    // Crear relaciones
     async insert(createData: any): Promise<any> {
 
-        const { tipo, tecnicos, creatorUserId } = createData;
-        createData.motivoRechazo = createData.motivoRechazo?.toString().toUpperCase();
-
-        const ordenServicioHistorial = await this.prisma.ordenesServicioHistorial.create({
-            data: createData,
-            include: { creatorUser: true }
-        });
+        const { ordenServicioHistorialId, tecnicos, creatorUserId } = createData;
 
         // Se agregan tecnicos al historial de la orden
-        if (tipo === 'En proceso') {
-            tecnicos.forEach(async (tecnico: any) => {
-                await this.prisma.ordenesServicioHistorialToTecnicos.create({
-                    data: {
-                        ordenServicioHistorialId: Number(ordenServicioHistorial.id),
-                        tecnicoId: tecnico.id,
-                        creatorUserId
-                    }
-                });
-            });
-        }
+        tecnicos.forEach(async (tecnico: any) => {
+            await this.prisma.ordenesServicioHistorialToTecnicos.create({ 
+                data: { 
+                    ordenServicioHistorialId: Number(ordenServicioHistorialId), 
+                    tecnicoId: tecnico.id,
+                    creatorUserId
+                } });
+        });
 
-        return ordenServicioHistorial;
+        return '';
+
     }
 
     // Actualizar relacion
-    async update(id: number, updateData: Prisma.OrdenesServicioHistorialUpdateInput): Promise<OrdenesServicioHistorial> {
+    async update(id: number, updateData: Prisma.OrdenesServicioHistorialToTecnicosUpdateInput): Promise<OrdenesServicioHistorialToTecnicos> {
 
-        updateData.motivoRechazo = updateData.motivoRechazo?.toString().toUpperCase();
-
-        const relacionDB = await this.prisma.ordenesServicioHistorial.findFirst({ where: { id } });
+        const relacionDB = await this.prisma.ordenesServicioHistorialToTecnicos.findFirst({ where: { id } });
 
         // Verificacion: La relacion no existe
         if (!relacionDB) throw new NotFoundException('La relacion no existe');
 
-        return await this.prisma.ordenesServicioHistorial.update({
+        return await this.prisma.ordenesServicioHistorialToTecnicos.update({
             where: { id },
             data: updateData,
             include: {
@@ -113,5 +103,7 @@ export class OrdenesServicioHistorialService {
         })
 
     }
+
+
 
 }

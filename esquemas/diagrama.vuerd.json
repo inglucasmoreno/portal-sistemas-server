@@ -3,8 +3,8 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -566.7660999999998,
-    "scrollLeft": -439.2815999999999,
+    "scrollTop": -731.2989999999998,
+    "scrollLeft": -600.5231999999999,
     "zoomLevel": 0.9,
     "show": {
       "tableComment": true,
@@ -663,7 +663,7 @@
           "active": false,
           "left": 927.3103,
           "top": 46.0446,
-          "zIndex": 4,
+          "zIndex": 3,
           "widthName": 115.673828125,
           "widthComment": 60,
           "color": "#00FF15"
@@ -1071,7 +1071,7 @@
           "active": false,
           "left": 522.7929,
           "top": 416.7336,
-          "zIndex": 6,
+          "zIndex": 5,
           "widthName": 98.09716796875,
           "widthComment": 60,
           "color": "#FF00FD"
@@ -1249,7 +1249,7 @@
           "active": false,
           "left": 21.6663,
           "top": 505.5776,
-          "zIndex": 5,
+          "zIndex": 4,
           "widthName": 136.41162109375,
           "widthComment": 60,
           "color": "#00ECFF"
@@ -1335,7 +1335,7 @@
             "name": "activo",
             "comment": "",
             "dataType": "boolean",
-            "default": "string",
+            "default": "true",
             "option": {
               "autoIncrement": false,
               "primaryKey": false,
@@ -1401,10 +1401,10 @@
           }
         ],
         "ui": {
-          "active": true,
-          "left": 652.95,
-          "top": 933,
-          "zIndex": 9,
+          "active": false,
+          "left": 546.2831,
+          "top": 931.8889,
+          "zIndex": 97,
           "widthName": 159.5234375,
           "widthComment": 60,
           "color": "#FC07F3"
@@ -1413,14 +1413,14 @@
       },
       {
         "id": "dab6ea74-579e-4bf5-9d53-c1fb810372ed",
-        "name": "ordenesServicioHistorial",
+        "name": "OrdenesServicioHistorial",
         "comment": "",
         "columns": [
           {
             "id": "007a3232-e2d6-4a57-92c3-62f6d8c2fb0f",
             "name": "id",
             "comment": "",
-            "dataType": "",
+            "dataType": "int",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -1582,10 +1582,165 @@
           "active": false,
           "left": 1047.4453,
           "top": 456.8031,
-          "zIndex": 7,
-          "widthName": 142.1689453125,
+          "zIndex": 100,
+          "widthName": 145.05078125,
           "widthComment": 60,
           "color": "#FF37DA"
+        },
+        "visible": true
+      },
+      {
+        "id": "4e6e3a60-ed10-492d-b132-3b78a4fbef4e",
+        "name": "OrdenesServicioHistorialToTecnicos",
+        "comment": "",
+        "columns": [
+          {
+            "id": "f222798a-b02c-456a-949f-3c86273e6a00",
+            "name": "id",
+            "comment": "",
+            "dataType": "int",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "27f41bf1-b570-43a6-bb03-06b2549cb115",
+            "name": "tecnicoId",
+            "comment": "",
+            "dataType": "int",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "bcf4583f-ac86-4914-a6af-bcabb7b0724d",
+            "name": "ordenServicioHistorialId",
+            "comment": "",
+            "dataType": "int",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 139.28076171875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "ccbd7b0e-8e8e-47dc-be71-5e3d3fe20f5b",
+            "name": "activo",
+            "comment": "",
+            "dataType": "boolean",
+            "default": "true",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "64923c87-d6b2-4f60-b5c3-bb8da53d1024",
+            "name": "createdAt",
+            "comment": "",
+            "dataType": "date",
+            "default": "Now()",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "a1aa4bbf-4502-4ca5-af85-adbe24ce0bd1",
+            "name": "updatedAt",
+            "comment": "",
+            "dataType": "date",
+            "default": "Now()",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 61.2744140625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 1023.7263,
+          "top": 766.9879,
+          "zIndex": 103,
+          "widthName": 209.35888671875,
+          "widthComment": 60,
+          "color": "#E300FF"
         },
         "visible": true
       }
@@ -1746,8 +1901,8 @@
           "columnIds": [
             "61d28244-f094-4d39-ace8-51f73a30b6ec"
           ],
-          "x": 842.61357421875,
-          "y": 933,
+          "x": 735.94667421875,
+          "y": 931.8889,
           "direction": "top"
         },
         "constraintName": "fk_ordenesservicio_to_ordenservicioasignada",
@@ -1777,6 +1932,32 @@
           "direction": "left"
         },
         "constraintName": "fk_ordenesservicio_to_ordenesserviciohistorial",
+        "visible": true
+      },
+      {
+        "id": "25b85278-6c48-4f17-b27a-b86d48dad56b",
+        "identification": false,
+        "relationshipType": "OneOnly",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "dab6ea74-579e-4bf5-9d53-c1fb810372ed",
+          "columnIds": [
+            "007a3232-e2d6-4a57-92c3-62f6d8c2fb0f"
+          ],
+          "x": 1237.10887421875,
+          "y": 669.3031,
+          "direction": "bottom"
+        },
+        "end": {
+          "tableId": "4e6e3a60-ed10-492d-b132-3b78a4fbef4e",
+          "columnIds": [
+            "bcf4583f-ac86-4914-a6af-bcabb7b0724d"
+          ],
+          "x": 1236.866680859375,
+          "y": 766.9879,
+          "direction": "top"
+        },
+        "constraintName": "fk_ordenesserviciohistorial_to_ordenesserviciohistorialtotecnicos",
         "visible": true
       }
     ]
