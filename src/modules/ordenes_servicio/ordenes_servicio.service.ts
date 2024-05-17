@@ -24,6 +24,11 @@ export class OrdenesServicioService {
         ordenesServicioHistorial: {
           orderBy: { createdAt: 'desc' },
           include: {
+            OrdenesServicioHistorialToTecnicos: {
+              include: {
+                tecnico: true
+              }
+            },
             creatorUser: true
           }
         },

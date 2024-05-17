@@ -73,6 +73,9 @@ export class OrdenesServicioHistorialService {
         const { tipo, tecnicos, creatorUserId } = createData;
         createData.motivoRechazo = createData.motivoRechazo?.toString().toUpperCase();
 
+        // Eliminar los tecnicos de createData
+        delete createData.tecnicos;
+
         const ordenServicioHistorial = await this.prisma.ordenesServicioHistorial.create({
             data: createData,
             include: { creatorUser: true }
