@@ -17,6 +17,11 @@ export class UsuariosService {
         UsuariosDependencias: {
           include: {
             dependencia: true
+          },
+          orderBy: {
+            dependencia: {
+              nombre: 'asc'
+            }
           }
         }
       },
@@ -32,7 +37,12 @@ export class UsuariosService {
       include: {
         UsuariosDependencias: {
           include: {
-            dependencia: true
+            dependencia: true,
+          },
+          orderBy: {
+            dependencia: {
+              nombre: 'asc'
+            }
           }
         }
       },
@@ -47,6 +57,11 @@ export class UsuariosService {
         UsuariosDependencias: {
           include: {
             dependencia: true
+          },
+          orderBy: {
+            dependencia: {
+              nombre: 'asc'
+            }
           }
         }
       },
@@ -62,6 +77,11 @@ export class UsuariosService {
         UsuariosDependencias: {
           include: {
             dependencia: true
+          },
+          orderBy: {
+            dependencia: {
+              nombre: 'asc'
+            }
           }
         }
       },
@@ -96,6 +116,11 @@ export class UsuariosService {
         UsuariosDependencias: {
           include: {
             dependencia: true
+          },
+          orderBy: {
+            dependencia: {
+              nombre: 'asc'
+            }
           }
         }
       },
@@ -109,8 +134,6 @@ export class UsuariosService {
   async crearUsuario(usuariosDTO: any): Promise<Usuarios> {
 
     const { dependencias, creatorUserId } = usuariosDTO;
-
-    console.log(dependencias);
 
     // Uppercase y Lowercase
     usuariosDTO.apellido = usuariosDTO.apellido.toLocaleUpperCase();
@@ -155,6 +178,11 @@ export class UsuariosService {
         UsuariosDependencias: {
           include: {
             dependencia: true
+          },
+          orderBy: {
+            dependencia: {
+              nombre: 'asc'
+            }
           }
         }
       },
@@ -164,7 +192,8 @@ export class UsuariosService {
     for (const dependencia of dependencias) {
       const dataUsuarioDependencia = {
         usuarioId: usuarioCreado.id,
-        dependenciaId: dependencia,
+        dependenciaId: dependencia.id,
+        soloLectura: dependencia.soloLectura,
         creatorUserId
       }
       await this.prisma.usuariosDependencias.create({ data: dataUsuarioDependencia });
@@ -189,6 +218,7 @@ export class UsuariosService {
       dni,
       email,
       telefono,
+      asignableSolicitud,
       dependencias,
       role,
       password,
@@ -202,30 +232,31 @@ export class UsuariosService {
       dni,
       email,
       telefono,
+      asignableSolicitud,
       role,
       password,
-      activo: activo === 'true' ? true : false,
+      activo,
     }
 
     // Se agrega la relacion usuarioDependencia
-    if (dependencias.length > 0) {
+    // if (dependencias.length > 0) {
 
-      const dataUsuarioDependencia = {
-        usuarioId: id,
-        dependenciaId: Number(dependencias[0]),
-        creatorUserId: usuariosUpdateDTO.creatorUserId
-      }
+    //   const dataUsuarioDependencia = {
+    //     usuarioId: id,
+    //     dependenciaId: Number(dependencias[0]),
+    //     creatorUserId: usuariosUpdateDTO.creatorUserId
+    //   }
 
-      // Actualizar - Update la relacion usuarioDependencia donde usuarioId = id
-      const usuarioDependenciaDB = await this.prisma.usuariosDependencias.findFirst({ where: { usuarioId: id } });
+    //   // Actualizar - Update la relacion usuarioDependencia donde usuarioId = id
+    //   const usuarioDependenciaDB = await this.prisma.usuariosDependencias.findFirst({ where: { usuarioId: id } });
 
-      if (usuarioDependenciaDB) {
-        await this.prisma.usuariosDependencias.update({ where: { id: usuarioDependenciaDB.id }, data: dataUsuarioDependencia });
-      } else {
-        await this.prisma.usuariosDependencias.create({ data: dataUsuarioDependencia });
-      }
+    //   if (usuarioDependenciaDB) {
+    //     await this.prisma.usuariosDependencias.update({ where: { id: usuarioDependenciaDB.id }, data: dataUsuarioDependencia });
+    //   } else {
+    //     await this.prisma.usuariosDependencias.create({ data: dataUsuarioDependencia });
+    //   }
 
-    }
+    // }
 
     return await this.prisma.usuarios.update({
       where: { id },
@@ -234,6 +265,11 @@ export class UsuariosService {
         UsuariosDependencias: {
           include: {
             dependencia: true
+          },
+          orderBy: {
+            dependencia: {
+              nombre: 'asc'
+            }
           }
         }
       },
@@ -302,6 +338,11 @@ export class UsuariosService {
         UsuariosDependencias: {
           include: {
             dependencia: true
+          },
+          orderBy: {
+            dependencia: {
+              nombre: 'asc'
+            }
           }
         }
       },

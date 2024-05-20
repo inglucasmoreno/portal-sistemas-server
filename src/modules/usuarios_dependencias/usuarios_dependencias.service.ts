@@ -37,7 +37,7 @@ export class UsuariosDependenciasService {
     let where = {};
     let orderBy = {};
 
-    orderBy[columna] = direccion;    
+    orderBy[columna] = direccion;
 
     // Filtro por activo
     if (activo !== '') where = { ...where, activo: activo === 'true' ? true : false };
@@ -72,12 +72,26 @@ export class UsuariosDependenciasService {
   }
 
   // Crear relacion
-  async insert(createData: Prisma.UsuariosDependenciasCreateInput): Promise<UsuariosDependencias> {
-    return await this.prisma.usuariosDependencias.create({ data: createData, include: {
-      usuario: true,
-      dependencia: true,
-      creatorUser: true,
-    } });
+  async insert(createData: any): Promise<UsuariosDependencias> {
+
+    // Verificar si la dependencia ya existe para ese usuario
+    const relacionExistente = await this.prisma.usuariosDependencias.findFirst({
+      where: {
+        usuarioId: createData.usuarioId,
+        dependenciaId: createData.dependenciaId
+      }
+    })
+
+    if(relacionExistente) throw new NotFoundException('La dependencia ya esta asignada');
+
+    return await this.prisma.usuariosDependencias.create({
+      data: createData, include: {
+        usuario: true,
+        dependencia: true,
+        creatorUser: true,
+      }
+    });
+    
   }
 
   // Actualizar relacion
@@ -92,5 +106,19 @@ export class UsuariosDependenciasService {
       }
     })
   }
-  
+
+  // Eliminar relacion
+  async delete(id: number): Promise<UsuariosDependencias> {
+    return await this.prisma.usuariosDependencias.delete(
+      {
+        where: { id },
+        include: {
+          usuario: true,
+          dependencia: true,
+          creatorUser: true,
+        }
+      }
+    )
+  }
+
 }

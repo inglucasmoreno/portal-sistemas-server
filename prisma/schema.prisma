@@ -20,6 +20,7 @@ model Usuarios {
   password                                  String
   email                                     String                               @db.VarChar(50)
   telefono                                  String                               @db.VarChar(50)
+  asignableSolicitud                        Boolean?                             @default(false)
   role                                      String?                              @default("ADMIN_ROLE")
   activo                                    Boolean?                             @default(true)
   createdAt                                 DateTime                             @default(now())
@@ -57,6 +58,7 @@ model UsuariosDependencias {
   dependencia   Dependencias? @relation(fields: [dependenciaId], references: [id])
   usuarioId     Int?
   usuario       Usuarios?     @relation("UsuariosToDependencias", fields: [usuarioId], references: [id])
+  soloLectura   Boolean?      @default(false)
   activo        Boolean?      @default(true)
   creatorUserId Int?
   creatorUser   Usuarios?     @relation("CreatorUsuarioDependencia", fields: [creatorUserId], references: [id])
