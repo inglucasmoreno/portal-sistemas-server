@@ -89,7 +89,13 @@ export class UsuariosService {
   }
 
   // Listar usuario
-  async listarUsuarios({ columna = 'apellido', direccion = 1, activo = '', parametro = '' }): Promise<Usuarios[]> {
+  async listarUsuarios({ 
+    columna = 'apellido', 
+    direccion = 1, 
+    activo = '', 
+    asignableSolicitud = '',
+    parametro = '' 
+  }): Promise<Usuarios[]> {
 
     let where = {};
     let orderBy = {};
@@ -98,6 +104,9 @@ export class UsuariosService {
 
     // Filtro por activo
     if (activo !== '') where = { ...where, activo: activo === 'true' ? true : false };
+
+    // Filtro por asignableSolictud
+    if (asignableSolicitud !== '') where = { ...where, asignableSolicitud: asignableSolicitud === 'true' ? true : false };
 
     // Filtro por DNI, apellido y nombre
     if (parametro !== '') {

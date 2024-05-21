@@ -124,8 +124,20 @@ export class OrdenesServicioService {
     updateData.observacionSolicitud = updateData?.observacionSolicitud?.toString().toUpperCase();
     updateData.motivoRechazo = updateData?.motivoRechazo?.toString().toUpperCase();
     if(updateData.fechaCierre) updateData.fechaCierre = new Date(updateData.fechaCierre);
+    if(updateData.fechaEnProceso) updateData.fechaEnProceso = new Date(updateData.fechaEnProceso);
     
     const ordenDB = await this.prisma.ordenesServicio.findFirst({ where: { id } });
+
+    if(updateData.estadoOrden === 'Completada' || updateData.estadoOrden === 'Rechazada') {
+      await this.prisma.ordenesServicioToTecnicos.updateMany({
+        where: {
+          ordenServicioId: id
+        },
+        data: {
+          activo: false
+        }
+      })
+    }
 
     // Verificacion: La orden no existe
     if (!ordenDB) throw new NotFoundException('El orden no existe');
