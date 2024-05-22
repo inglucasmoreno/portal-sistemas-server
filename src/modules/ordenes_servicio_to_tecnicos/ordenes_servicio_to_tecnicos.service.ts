@@ -29,6 +29,7 @@ export class OrdenesServicioToTecnicosService {
         columna = 'id',
         direccion = 'desc',
         activo = '',
+        tecnico = '',
         parametro = '',
         pagina = 1,
         itemsPorPagina = 10000
@@ -41,6 +42,9 @@ export class OrdenesServicioToTecnicosService {
         
         // Filtro por activo
         if (activo !== '') where = { ...where, activo: activo === 'true' ? true : false };
+
+        // Filtro por tecnico
+        if (tecnico !== '') where = { ...where, tecnicoId: Number(tecnico) };
 
         // Total de ordenes to tecnicos
         const totalItems = await this.prisma.ordenesServicioToTecnicos.count({ where });
