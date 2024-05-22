@@ -54,7 +54,12 @@ export class OrdenesServicioToTecnicosService {
             take: Number(itemsPorPagina),
             include: {
                 tecnico: true,
-                ordenServicio: true,
+                ordenServicio: {
+                    include: {
+                        dependencia: true,
+                        tipoOrdenServicio: true,
+                    }
+                },
                 creatorUser: true,
             },
             // skip: (pagina - 1) * itemsPorPagina,
