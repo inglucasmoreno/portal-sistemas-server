@@ -40,12 +40,6 @@ export class TiposOrdenServicioService {
       // Filtro por activo
       if (activo !== '') where = { ...where, activo: activo === 'true' ? true : false };
   
-      // where.OR.push({
-      //   descripcion: {
-      //     contains: parametro.toUpperCase()
-      //   }
-      // })
-  
       // Total de tipos
       const totalItems = await this.prisma.tiposOrdenServicio.count({ where });
   

@@ -39,12 +39,44 @@ export class OrdenesServicioToTecnicosService {
         let where = {};
         let orderBy = {};
         orderBy[columna] = direccion;
-        
+
         // Filtro por activo
         if (activo !== '') where = { ...where, activo: activo === 'true' ? true : false };
 
         // Filtro por tecnico
         if (tecnico !== '') where = { ...where, tecnicoId: Number(tecnico) };
+
+        if (columna === 'ordenServicio.dependencia.nombre') {
+            orderBy = {
+                ordenServicio: {
+                    dependencia: {
+                        nombre: direccion
+                    }
+                }
+            }
+        }
+        
+        if (columna === 'ordenServicio.tipoOrdenServicio.descripcion') {
+            orderBy = {
+                ordenServicio: {
+                    tipoOrdenServicio: {
+                        descripcion: direccion
+                    }
+                }
+            }
+        }
+
+        // Filtro por parametro
+        if (parametro !== '') {
+            where = {
+                ...where,
+                OR: [
+                    { id: Number(parametro) ? Number(parametro) : -1 },
+                    { ordenServicio: { dependencia: { nombre: { contains: parametro } } } },
+                    { ordenServicio: { tipoOrdenServicio: { descripcion: { contains: parametro } } } },
+                ]
+            }
+        }
 
         // Total de ordenes to tecnicos
         const totalItems = await this.prisma.ordenesServicioToTecnicos.count({ where });
@@ -62,7 +94,7 @@ export class OrdenesServicioToTecnicosService {
                 },
                 creatorUser: true,
             },
-            // skip: (pagina - 1) * itemsPorPagina,
+            skip: (pagina - 1) * itemsPorPagina,
             orderBy,
             where
         })
@@ -76,26 +108,27 @@ export class OrdenesServicioToTecnicosService {
 
     // Crear orden to tecnico
     async insert(createData: any): Promise<any> {
-        
+
         const { ordenServicioId, tecnicos, creatorUserId } = createData;
 
         // Se agregan tecnicos a la orden
         tecnicos.forEach(async (tecnico: any) => {
-            await this.prisma.ordenesServicioToTecnicos.create({ 
-                data: { 
-                    ordenServicioId: Number(ordenServicioId), 
+            await this.prisma.ordenesServicioToTecnicos.create({
+                data: {
+                    ordenServicioId: Number(ordenServicioId),
                     tecnicoId: tecnico.id,
                     creatorUserId
-                } });
+                }
+            });
         });
 
         // Se coloca la orden de servicio en estado "En proceso"
-        await this.prisma.ordenesServicio.update({ 
-            where: { id: Number(ordenServicioId) }, 
-            data: { 
+        await this.prisma.ordenesServicio.update({
+            where: { id: Number(ordenServicioId) },
+            data: {
                 estadoOrden: 'En proceso',
                 fechaEnProceso: new Date()
-            } 
+            }
         });
 
         return '';

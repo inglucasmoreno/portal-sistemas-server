@@ -57,23 +57,45 @@ export class OrdenesServicioService {
 
     // Filtro por dependencia
     if (dependencia !== '') {
-      where = {...where, dependenciaId: Number(dependencia)}
+      where = { ...where, dependenciaId: Number(dependencia) }
     }
 
     // Filtro por estado
     if (estado !== '') {
-      where = {...where, estadoOrden: estado}
+      where = { ...where, estadoOrden: estado }
     }
 
-    // where.OR.push({
-    //   descripcion: {
-    //     contains: parametro.toUpperCase()
-    //   }
-    // })
-
+    // Filtro por parametro
+    if (parametro !== '') {
+      where = {
+        ...where,
+        OR: [
+          { id: Number(parametro) ? Number(parametro) : -1 },
+          { dependencia: { nombre: { contains: parametro } } },
+          { tipoOrdenServicio: { descripcion: { contains: parametro } } },
+        ]
+      }
+    }
+    
     // Ordenando datos
     let orderBy = {};
     orderBy[columna] = direccion;
+
+    if (columna === 'dependencia.nombre') {
+      orderBy = {
+        dependencia: {
+          nombre: direccion
+        }
+      }
+    }
+
+    if (columna === 'tipoOrdenServicio.descripcion') {
+      orderBy = {
+        tipoOrdenServicio: {
+          descripcion: direccion
+        }
+      }
+    }
 
     // Total de ordenes
     const totalItems = await this.prisma.ordenesServicio.count({ where });
@@ -123,12 +145,12 @@ export class OrdenesServicioService {
     // Adaptando valores
     updateData.observacionSolicitud = updateData?.observacionSolicitud?.toString().toUpperCase();
     updateData.motivoRechazo = updateData?.motivoRechazo?.toString().toUpperCase();
-    if(updateData.fechaCierre) updateData.fechaCierre = new Date(updateData.fechaCierre);
-    if(updateData.fechaEnProceso) updateData.fechaEnProceso = new Date(updateData.fechaEnProceso);
-    
+    if (updateData.fechaCierre) updateData.fechaCierre = new Date(updateData.fechaCierre);
+    if (updateData.fechaEnProceso) updateData.fechaEnProceso = new Date(updateData.fechaEnProceso);
+
     const ordenDB = await this.prisma.ordenesServicio.findFirst({ where: { id } });
 
-    if(updateData.estadoOrden === 'Completada' || updateData.estadoOrden === 'Rechazada') {
+    if (updateData.estadoOrden === 'Completada' || updateData.estadoOrden === 'Rechazada') {
       await this.prisma.ordenesServicioToTecnicos.updateMany({
         where: {
           ordenServicioId: id
