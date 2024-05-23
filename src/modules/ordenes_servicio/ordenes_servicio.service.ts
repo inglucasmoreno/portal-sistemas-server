@@ -150,6 +150,21 @@ export class OrdenesServicioService {
 
     const ordenDB = await this.prisma.ordenesServicio.findFirst({ where: { id } });
 
+    // Verificacion: La orden no existe
+    if (!ordenDB) throw new NotFoundException('El orden no existe');
+
+    if(updateData.estadoOrden === 'Completada' && ordenDB.estadoOrden === 'Completada' ){
+      throw new NotFoundException('La orden ya fue encuentra completada');
+    }
+
+    if(updateData.estadoOrden === 'Rechazada' && ordenDB.estadoOrden === 'Rechazada' ){
+      throw new NotFoundException('La orden ya fue encuentra rechazada');
+    }
+
+    if(updateData.estadoOrden === 'En proceso' && ordenDB.estadoOrden === 'En proceso' ){
+      throw new NotFoundException('La orden ya fue encuentra en proceso de solucion');
+    }
+
     if (updateData.estadoOrden === 'Completada' || updateData.estadoOrden === 'Rechazada') {
       await this.prisma.ordenesServicioToTecnicos.updateMany({
         where: {
@@ -160,9 +175,6 @@ export class OrdenesServicioService {
         }
       })
     }
-
-    // Verificacion: La orden no existe
-    if (!ordenDB) throw new NotFoundException('El orden no existe');
 
     return await this.prisma.ordenesServicio.update({
       where: { id },

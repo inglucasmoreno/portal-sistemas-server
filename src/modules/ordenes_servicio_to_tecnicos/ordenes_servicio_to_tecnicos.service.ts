@@ -111,6 +111,13 @@ export class OrdenesServicioToTecnicosService {
 
         const { ordenServicioId, tecnicos, creatorUserId } = createData;
 
+        // Se verifica que la orden existe
+        const ordenServicioDB = await this.prisma.ordenesServicio.findFirst({ where: { id: Number(ordenServicioId) } });
+        if (!ordenServicioDB) throw new NotFoundException('La solicitud no existe');
+
+        // Se verifica que la orden no este en estado "En proceso"
+        if (ordenServicioDB.estadoOrden === 'En proceso') throw new NotFoundException('La solicitud ya esta en proceso de solucion');
+
         // Se agregan tecnicos a la orden
         tecnicos.forEach(async (tecnico: any) => {
             await this.prisma.ordenesServicioToTecnicos.create({
