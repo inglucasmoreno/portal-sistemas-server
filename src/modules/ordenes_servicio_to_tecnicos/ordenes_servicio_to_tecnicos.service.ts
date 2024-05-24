@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { OrdenesServicioToTecnicos, Prisma } from '@prisma/client';
+import { create } from 'domain';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -55,13 +56,21 @@ export class OrdenesServicioToTecnicosService {
                 }
             }
         }
-        
+
         if (columna === 'ordenServicio.tipoOrdenServicio.descripcion') {
             orderBy = {
                 ordenServicio: {
                     tipoOrdenServicio: {
                         descripcion: direccion
                     }
+                }
+            }
+        }
+
+        if (columna === 'ordenServicio.createdAt') {
+            orderBy = {
+                ordenServicio: {
+                    createdAt: direccion
                 }
             }
         }
