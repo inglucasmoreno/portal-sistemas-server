@@ -90,7 +90,7 @@ model OrdenesServicio {
   telefonoContacto         String                      @db.VarChar(50)
   observacionSolicitud     String?                     @db.VarChar(500)
   motivoRechazo            String?                     @default("") @db.VarChar(500)
-  estadoOrden              String?                     @default("Pendiente")
+  estadoOrden              String?                     @default("Sin asignar")
   estadoEquipo             String?                     @default("Funcionando")
   activo                   Boolean?                    @default(true)
   createdAt                DateTime                    @default(now())
