@@ -89,7 +89,7 @@ model OrdenesServicio {
   usuarioId                Int?
   telefonoContacto         String                      @db.VarChar(50)
   observacionSolicitud     String?                     @db.VarChar(500)
-  motivoRechazo            String?                     @default("") @db.VarChar(500)
+  motivoSinSolucion        String?                     @default("") @db.VarChar(500)
   estadoOrden              String?                     @default("Sin asignar")
   estadoEquipo             String?                     @default("Funcionando")
   activo                   Boolean?                    @default(true)
@@ -123,7 +123,7 @@ model OrdenesServicioToTecnicos {
 model OrdenesServicioHistorial {
   id                                 Int                                  @id @default(autoincrement())
   tipo                               String                               @db.VarChar(150)
-  motivoRechazo                      String?                              @db.VarChar(500)
+  motivoSinSolucion                  String?                              @db.VarChar(500)
   activo                             Boolean?                             @default(true)
   creatorUserId                      Int?
   ordenServicioId                    Int?
