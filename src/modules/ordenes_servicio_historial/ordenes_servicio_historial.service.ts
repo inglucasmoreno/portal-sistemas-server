@@ -72,6 +72,8 @@ export class OrdenesServicioHistorialService {
 
         const { tipo, tecnicos, creatorUserId } = createData;
         createData.motivoSinSolucion = createData.motivoSinSolucion?.toString().toUpperCase();
+        createData.motivoPendiente = createData.motivoPendiente?.toString().toUpperCase();
+        createData.comentariosSolucion = createData.comentariosSolucion?.toString().toUpperCase();
 
         // Eliminar los tecnicos de createData
         delete createData.tecnicos;
@@ -101,6 +103,8 @@ export class OrdenesServicioHistorialService {
     async update(id: number, updateData: Prisma.OrdenesServicioHistorialUpdateInput): Promise<OrdenesServicioHistorial> {
 
         updateData.motivoSinSolucion = updateData.motivoSinSolucion?.toString().toUpperCase();
+        updateData.motivoPendiente = updateData.motivoPendiente?.toString().toUpperCase();
+        updateData.comentariosSolucion = updateData.comentariosSolucion?.toString().toUpperCase();
 
         const relacionDB = await this.prisma.ordenesServicioHistorial.findFirst({ where: { id } });
 

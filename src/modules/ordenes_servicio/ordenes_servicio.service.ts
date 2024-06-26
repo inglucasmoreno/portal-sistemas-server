@@ -134,19 +134,26 @@ export class OrdenesServicioService {
 
   // Crear orden
   async insert(createData: Prisma.OrdenesServicioCreateInput): Promise<OrdenesServicio> {
-    createData.observacionSolicitud = createData.observacionSolicitud?.toString().toUpperCase();
-    createData.motivoRechazo = createData?.motivoRechazo?.toString().toUpperCase();
+    createData.comentariosSolucion = createData.comentariosSolucion?.toString().toUpperCase();
+    createData.observacionSolicitud = createData?.observacionSolicitud?.toString().toUpperCase();
+    createData.motivoSinSolucion = createData?.motivoSinSolucion?.toString().toUpperCase();
+    createData.motivoPendiente = createData?.motivoPendiente?.toString().toUpperCase();
     return await this.prisma.ordenesServicio.create({ data: createData, include: { creatorUser: true } });
   }
 
   // Actualizar orden
   async update(id: number, updateData: any): Promise<OrdenesServicio> {
-
+    
     // Adaptando valores
+    updateData.comentariosSolucion = updateData?.comentariosSolucion?.toString().toUpperCase();
     updateData.observacionSolicitud = updateData?.observacionSolicitud?.toString().toUpperCase();
-    updateData.motivoRechazo = updateData?.motivoRechazo?.toString().toUpperCase();
+    updateData.motivoSinSolucion = updateData?.motivoSinSolucion?.toString().toUpperCase();
+    updateData.motivoPendiente = updateData?.motivoPendiente?.toString().toUpperCase();
+    if (updateData.fechaPendiente) updateData.fechaPendiente = new Date(updateData.fechaPendiente);
     if (updateData.fechaCierre) updateData.fechaCierre = new Date(updateData.fechaCierre);
     if (updateData.fechaEnProceso) updateData.fechaEnProceso = new Date(updateData.fechaEnProceso);
+    
+    console.log(updateData);
 
     const ordenDB = await this.prisma.ordenesServicio.findFirst({ where: { id } });
 
@@ -157,15 +164,19 @@ export class OrdenesServicioService {
       throw new NotFoundException('La orden ya fue encuentra completada');
     }
 
-    if(updateData.estadoOrden === 'Rechazada' && ordenDB.estadoOrden === 'Rechazada' ){
-      throw new NotFoundException('La orden ya fue encuentra rechazada');
+    if(updateData.estadoOrden === 'Sin solucion' && ordenDB.estadoOrden === 'Sin solucion' ){
+      throw new NotFoundException('La orden ya fue encuentra sin solucion');
     }
 
     if(updateData.estadoOrden === 'En proceso' && ordenDB.estadoOrden === 'En proceso' ){
       throw new NotFoundException('La orden ya fue encuentra en proceso de solucion');
     }
 
-    if (updateData.estadoOrden === 'Completada' || updateData.estadoOrden === 'Rechazada') {
+    if(updateData.estadoOrden === 'Pendiente' && ordenDB.estadoOrden === 'Pendiente' ){
+      throw new NotFoundException('La orden ya fue encuentra pendiente');
+    }
+
+    if (updateData.estadoOrden === 'Completada' || updateData.estadoOrden === 'Sin solucion' || updateData.estadoOrden === 'Pendiente') {
       await this.prisma.ordenesServicioToTecnicos.updateMany({
         where: {
           ordenServicioId: id

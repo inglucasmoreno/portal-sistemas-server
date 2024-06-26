@@ -81,8 +81,9 @@ model TiposOrdenServicio {
 // Ordenes de servicio
 model OrdenesServicio {
   id                       Int                         @id @default(autoincrement())
-  fechaPendiente           DateTime                    @default(now())
+  fechaSinAsignar          DateTime                    @default(now())
   fechaEnProceso           DateTime                    @default(now())
+  fechaPendiente           DateTime                    @default(now())
   fechaCierre              DateTime                    @default(now())
   tipoOrdenServicioId      Int?
   dependenciaId            Int?
@@ -90,6 +91,8 @@ model OrdenesServicio {
   telefonoContacto         String                      @db.VarChar(50)
   observacionSolicitud     String?                     @db.VarChar(500)
   motivoSinSolucion        String?                     @default("") @db.VarChar(500)
+  motivoPendiente          String?                     @default("") @db.VarChar(500)
+  comentariosSolucion      String?                     @db.VarChar(500)
   estadoOrden              String?                     @default("Sin asignar")
   estadoEquipo             String?                     @default("Funcionando")
   activo                   Boolean?                    @default(true)
@@ -124,6 +127,8 @@ model OrdenesServicioHistorial {
   id                                 Int                                  @id @default(autoincrement())
   tipo                               String                               @db.VarChar(150)
   motivoSinSolucion                  String?                              @db.VarChar(500)
+  motivoPendiente                    String?                              @db.VarChar(500)
+  comentariosSolucion                String?                              @db.VarChar(500)
   activo                             Boolean?                             @default(true)
   creatorUserId                      Int?
   ordenServicioId                    Int?

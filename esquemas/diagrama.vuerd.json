@@ -3,7 +3,7 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -575,
+    "scrollTop": -475,
     "scrollLeft": -493,
     "zoomLevel": 0.9,
     "show": {
@@ -883,8 +883,8 @@
             }
           },
           {
-            "id": "5017be88-e66e-4b66-baf5-f637d68a083b",
-            "name": "observacionTecnico",
+            "id": "8eb5f252-2417-447b-ba1a-d817e8eb17ae",
+            "name": "comentariosSolucion",
             "comment": "",
             "dataType": "string",
             "default": "",
@@ -899,7 +899,7 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 116.17529296875,
+              "widthName": 122.67529296875,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -1094,7 +1094,7 @@
           "active": true,
           "left": 522.7929,
           "top": 416.7336,
-          "zIndex": 14,
+          "zIndex": 26,
           "widthName": 98.09716796875,
           "widthComment": 60,
           "color": "#FF00FD"
@@ -1427,7 +1427,7 @@
           "active": false,
           "left": 546.2831,
           "top": 931.8889,
-          "zIndex": 6,
+          "zIndex": 5,
           "widthName": 159.5234375,
           "widthComment": 60,
           "color": "#FC07F3"
@@ -1605,7 +1605,7 @@
           "active": false,
           "left": 1047.4453,
           "top": 456.8031,
-          "zIndex": 7,
+          "zIndex": 6,
           "widthName": 145.05078125,
           "widthComment": 60,
           "color": "#FF37DA"
@@ -1760,7 +1760,7 @@
           "active": false,
           "left": 1023.7263,
           "top": 766.9879,
-          "zIndex": 8,
+          "zIndex": 7,
           "widthName": 209.35888671875,
           "widthComment": 60,
           "color": "#E300FF"
@@ -1794,7 +1794,7 @@
           "columnIds": [
             "a5a028f8-f792-4728-b5fc-4442edd2087d"
           ],
-          "x": 841.845390234375,
+          "x": 842.9260787109375,
           "y": 416.7336,
           "direction": "top"
         },
@@ -1820,7 +1820,7 @@
           "columnIds": [
             "d2cc707b-a2da-4941-9cce-f5b6998e7922"
           ],
-          "x": 629.143730078125,
+          "x": 629.5039595703125,
           "y": 416.7336,
           "direction": "top"
         },
@@ -1915,7 +1915,7 @@
           "columnIds": [
             "74c5a907-1883-4228-a557-e4cd882585bf"
           ],
-          "x": 735.49456015625,
+          "x": 736.215019140625,
           "y": 854.7336,
           "direction": "bottom"
         },
@@ -1941,7 +1941,7 @@
           "columnIds": [
             "74c5a907-1883-4228-a557-e4cd882585bf"
           ],
-          "x": 948.1962203125,
+          "x": 949.63713828125,
           "y": 635.7336,
           "direction": "right"
         },
