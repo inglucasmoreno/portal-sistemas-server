@@ -112,7 +112,6 @@ model OrdenesServicioToTecnicos {
   id              Int              @id @default(autoincrement())
   ordenServicioId Int?
   tecnicoId       Int?
-  observaciones   String?          @db.VarChar(500)
   activo          Boolean?         @default(true)
   creatorUserId   Int?
   createdAt       DateTime         @default(now())
