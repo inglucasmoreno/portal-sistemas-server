@@ -1,0 +1,1 @@
+import{k as i}from"./chunk-Y76AUCL5.js";import{ga as m}from"./chunk-75MKQ6H5.js";var y=(()=>{let t=class t{transform(e){return i(new Date(e),"dd/MM/yyyy HH:mm")==="01/01/1970 00:00"?"SIN ESPECIFICAR":i(new Date(e),"dd/MM/yyyy HH:mm")}};t.\u0275fac=function(n){return new(n||t)},t.\u0275pipe=m({name:"fechaHora",type:t,pure:!0,standalone:!0});let r=t;return r})();export{y as a};
